@@ -1,133 +1,170 @@
 "use client";
 import { useState } from "react";
 
-const subjectData = [
-  { name: "Maths for Computing 2", attended: 37, total: 72 },
-  { name: "User Interface Design", attended: 32, total: 60 },
-  { name: "Intro to EEE", attended: 38, total: 66 },
-  { name: "Elements of Computing Systems 2", attended: 37, total: 65 },
-  { name: "Data Structures & Algorithms 1", attended: 40, total: 75 },
-  { name: "OOP in Java", attended: 42, total: 77 },
-  { name: "Glimpses of Glorious India", attended: 17, total: 31 },
+const subjects = [
+  { name: "Maths for Computing 2", total: 72 },
+  { name: "User Interface Design", total: 60 },
+  { name: "Intro to EEE", total: 66 },
+  { name: "Elements of Computing Systems 2", total: 65 },
+  { name: "Data Structures & Algorithms 1", total: 75 },
+  { name: "OOP in Java", total: 77 },
+  { name: "Glimpses of Glorious India", total: 31 },
 ];
 
 export default function AttendanceTracker() {
-  const [attendance, setAttendance] = useState(
-    subjectData.reduce((acc, sub) => ({
+  const [data, setData] = useState(
+    subjects.reduce((acc, sub) => ({
       ...acc,
-      [sub.name]: { present: sub.attended, total: sub.total, conducted: sub.attended }
-    }), {} as Record<string, { present: number; total: number; conducted: number }>)
+      [sub.name]: { conducted: "", attended: "" }
+    }), {} as Record<string, { conducted: string; attended: string }>)
   );
 
-  const mark = (subject: string, type: "present" | "absent" | "holiday") => {
-    setAttendance((prev) => {
-      const s = prev[subject];
-      if (type === "holiday") {
-        return {
-          ...prev,
-          [subject]: {
-            ...s,
-            total: s.total - 1,
-          },
-        };
-      }
-      return {
-        ...prev,
-        [subject]: {
-          ...s,
-          present: s.present + (type === "present" ? 1 : 0),
-          conducted: s.conducted + 1,
-        },
-      };
-    });
+  const update = (subject: string, field: string, value: string) => {
+    if (value !== "" && (isNaN(Number(value)) || Number(value) < 0)) return;
+    setData((prev) => ({
+      ...prev,
+      [subject]: { ...prev[subject], [field]: value }
+    }));
+  };
+
+  const calculate = (subject: string, total: number) => {
+    const { conducted, attended } = data[subject];
+    const c = Number(conducted);
+    const a = Number(attended);
+    if (!c || c <= 0) return null;
+    if (a > c) return null;
+    const percent = Math.round((a / c) * 100);
+    const remaining = total - c;
+    const alreadyAbsent = c - a;
+    const maxAbsent = Math.floor(total * 0.25);
+    const bunkLeft = Math.max(0, maxAbsent - alreadyAbsent);
+    const minRequired = Math.ceil(total * 0.75);
+    const needToAttend = Math.max(0, minRequired - a);
+    return { percent, bunkLeft, needToAttend, remaining };
   };
 
   return (
-    <div className="mt-10">
-      <h2 className="text-2xl font-bold text-blue-400 mb-1">Attendance Tracker</h2>
-      <p className="text-gray-400 text-sm mb-4">Minimum required: 75% | Semester ends: May 8</p>
+    <div className="mt-6 mb-10">
+      <h2 className="text-xl font-bold text-white mb-1">Attendance Calculator</h2>
+      <p className="text-gray-400 text-sm mb-6">
+        Minimum required: <span className="text-yellow-400 font-semibold">75%</span> • Semester ends: May 8, 2026
+      </p>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {subjectData.map((sub) => {
-          const { present, total, conducted } = attendance[sub.name];
-          const percent = conducted === 0 ? 0 : Math.round((present / conducted) * 100);
-          const remaining = total - conducted;
-
-          // Classes needed to reach/maintain 75%
-          const minRequired = Math.ceil(0.75 * total);
-          const canBunk = Math.max(0, present - Math.ceil(0.75 * conducted) + Math.floor(remaining - 0.75 * remaining));
-          const needToAttend = Math.max(0, minRequired - present);
-
-          const color = percent >= 75 ? "text-green-400" : percent >= 60 ? "text-yellow-400" : "text-red-400";
-          const bgColor = percent >= 75 ? "border-green-800" : percent >= 60 ? "border-yellow-800" : "border-red-800";
-
-          // Accurate bunk calculation
-          // Max classes you can miss = total - ceil(0.75 * total) - already absent
-          const alreadyAbsent = conducted - present;
-          const maxAbsent = Math.floor(total - 0.75 * total);
-          const bunkLeft = Math.max(0, maxAbsent - alreadyAbsent);
+        {subjects.map((sub) => {
+          const result = calculate(sub.name, sub.total);
+          const percent = result?.percent ?? 0;
+          const border = !result
+            ? "border-gray-800"
+            : percent >= 75
+            ? "border-green-600"
+            : percent >= 60
+            ? "border-yellow-600"
+            : "border-red-600";
+          const color = !result
+            ? "text-gray-500"
+            : percent >= 75
+            ? "text-green-400"
+            : percent >= 60
+            ? "text-yellow-400"
+            : "text-red-400";
+          const barColor = !result
+            ? "bg-gray-600"
+            : percent >= 75
+            ? "bg-green-500"
+            : percent >= 60
+            ? "bg-yellow-500"
+            : "bg-red-500";
 
           return (
-            <div key={sub.name} className={`bg-gray-800 p-4 rounded-xl border ${bgColor}`}>
-              <div className="flex justify-between items-center mb-1">
-                <h3 className="font-semibold text-white text-sm">{sub.name}</h3>
-                <span className={`font-bold text-lg ${color}`}>{percent}%</span>
+            <div key={sub.name} className={`bg-[#161b22] border ${border} rounded-2xl p-5 transition-all`}>
+              
+              {/* Header */}
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="font-semibold text-white text-sm">{sub.name}</h3>
+                  <p className="text-gray-500 text-xs mt-0.5">Total semester classes: {sub.total}</p>
+                </div>
+                <span className={`font-bold text-2xl ${color}`}>
+                  {result ? `${percent}%` : "--"}
+                </span>
               </div>
 
-              <p className="text-gray-400 text-xs mb-1">{present} / {conducted} classes attended</p>
-              <p className="text-gray-400 text-xs mb-3">{remaining} classes remaining in semester</p>
-
               {/* Progress bar */}
-              <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+              <div className="w-full bg-gray-800 rounded-full h-1.5 mb-4">
                 <div
-                  className={`h-2 rounded-full ${percent >= 75 ? "bg-green-500" : percent >= 60 ? "bg-yellow-500" : "bg-red-500"}`}
-                  style={{ width: `${Math.min(percent, 100)}%` }}
+                  className={`h-1.5 rounded-full transition-all duration-500 ${barColor}`}
+                  style={{ width: `${result ? Math.min(percent, 100) : 0}%` }}
                 />
               </div>
 
-              {/* Bunk info */}
-              <div className="grid grid-cols-2 gap-2 mb-3 text-center">
-                <div className="bg-gray-700 rounded-lg p-2">
-                  <p className="text-green-400 font-bold text-lg">{bunkLeft}</p>
-                  <p className="text-gray-400 text-xs">Can still bunk</p>
+              {/* Inputs */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                  <p className="text-gray-500 text-xs mb-1.5">Classes Conducted</p>
+                  <input
+                    type="number"
+                    min="0"
+                    max={sub.total}
+                    value={data[sub.name].conducted}
+                    onChange={(e) => update(sub.name, "conducted", e.target.value)}
+                    placeholder="e.g. 40"
+                    className="w-full bg-gray-900 border border-gray-700 hover:border-gray-500 focus:border-blue-500 text-white text-sm rounded-xl px-3 py-2 focus:outline-none transition"
+                  />
                 </div>
-                <div className="bg-gray-700 rounded-lg p-2">
-                  <p className="text-blue-400 font-bold text-lg">{needToAttend}</p>
-                  <p className="text-gray-400 text-xs">Must attend</p>
+                <div>
+                  <p className="text-gray-500 text-xs mb-1.5">Classes Attended</p>
+                  <input
+                    type="number"
+                    min="0"
+                    max={data[sub.name].conducted || sub.total}
+                    value={data[sub.name].attended}
+                    onChange={(e) => update(sub.name, "attended", e.target.value)}
+                    placeholder="e.g. 35"
+                    className="w-full bg-gray-900 border border-gray-700 hover:border-gray-500 focus:border-blue-500 text-white text-sm rounded-xl px-3 py-2 focus:outline-none transition"
+                  />
                 </div>
               </div>
 
-              {percent < 75 && (
-                <p className="text-red-400 text-xs mb-2 text-center">
-                  ⚠️ Below 75% — attend {needToAttend} more to recover
-                </p>
-              )}
-              {bunkLeft === 0 && percent >= 75 && (
-                <p className="text-yellow-400 text-xs mb-2 text-center">
-                  ⚠️ No more bunks left — attend all remaining classes
-                </p>
-              )}
+              {/* Results */}
+              {result ? (
+                <>
+                  <div className="grid grid-cols-3 gap-2 text-center mb-3">
+                    <div className="bg-gray-900 rounded-xl p-2.5">
+                      <p className="text-green-400 font-bold text-lg">{result.bunkLeft}</p>
+                      <p className="text-gray-500 text-xs">Can Bunk</p>
+                    </div>
+                    <div className="bg-gray-900 rounded-xl p-2.5">
+                      <p className="text-blue-400 font-bold text-lg">{result.needToAttend}</p>
+                      <p className="text-gray-500 text-xs">Must Attend</p>
+                    </div>
+                    <div className="bg-gray-900 rounded-xl p-2.5">
+                      <p className="text-purple-400 font-bold text-lg">{result.remaining}</p>
+                      <p className="text-gray-500 text-xs">Remaining</p>
+                    </div>
+                  </div>
 
-              {/* Buttons */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => mark(sub.name, "present")}
-                  className="flex-1 bg-green-600 hover:bg-green-500 text-white py-1 rounded-lg text-xs"
-                >
-                  ✓ Present
-                </button>
-                <button
-                  onClick={() => mark(sub.name, "absent")}
-                  className="flex-1 bg-red-600 hover:bg-red-500 text-white py-1 rounded-lg text-xs"
-                >
-                  ✗ Absent
-                </button>
-                <button
-                  onClick={() => mark(sub.name, "holiday")}
-                  className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-1 rounded-lg text-xs"
-                >
-                  🎉 Holiday
-                </button>
-              </div>
+                  {percent < 75 && (
+                    <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-3 py-2 text-center">
+                      <p className="text-red-400 text-xs">⚠️ Below 75% — attend {result.needToAttend} more to recover</p>
+                    </div>
+                  )}
+                  {result.bunkLeft === 0 && percent >= 75 && (
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-3 py-2 text-center">
+                      <p className="text-yellow-400 text-xs">⚠️ No bunk margin left — attend all remaining classes</p>
+                    </div>
+                  )}
+                  {result.bunkLeft > 0 && percent >= 75 && (
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-3 py-2 text-center">
+                      <p className="text-green-400 text-xs">✅ You can safely bunk {result.bunkLeft} more classes</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-2">
+                  <p className="text-gray-600 text-xs">Enter values above to calculate</p>
+                </div>
+              )}
             </div>
           );
         })}

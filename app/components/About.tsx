@@ -31,7 +31,7 @@ export default function About() {
           </div>
           <div>
             <p className="text-white font-bold text-lg">Dhanush Rongali</p>
-            <p className="text-gray-400 text-sm">Student Developer • Amrita University</p>
+            <p className="text-gray-400 text-sm">Student • Amrita University</p>
           </div>
         </div>
 
