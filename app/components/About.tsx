@@ -68,6 +68,7 @@ export default function About() {
               <p className="text-gray-400 text-xs">linkedin.com/in/dhanushrongali</p>
             </div>
           </button>
+          
         </div>
       </div>
     </div>

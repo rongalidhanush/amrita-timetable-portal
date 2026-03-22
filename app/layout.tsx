@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Amrita Timetable Portal",
   description: "Student Timetable Portal - Amrita Vishwa Vidyapeetham, Bengaluru",
+  openGraph: {
+    title: "Amrita Timetable Portal",
+    description: "Smart student portal for Amrita Vishwa Vidyapeetham",
+    url: "https://timetable-portal.vercel.app",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+      }
+    ],
+  },
 };
 
 export default function RootLayout({

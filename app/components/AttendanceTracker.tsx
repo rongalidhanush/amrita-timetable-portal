@@ -78,7 +78,7 @@ export default function AttendanceTracker() {
 
           return (
             <div key={sub.name} className={`bg-[#161b22] border ${border} rounded-2xl p-5 transition-all`}>
-              
+
               {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div>
@@ -161,9 +161,7 @@ export default function AttendanceTracker() {
                   )}
                 </>
               ) : (
-                <div className="text-center py-2">
-                  <p className="text-gray-600 text-xs">Enter values above to calculate</p>
-                </div>
+                <p className="text-gray-600 text-xs text-center">📊 Know your bunk margin,buddy!</p>
               )}
             </div>
           );

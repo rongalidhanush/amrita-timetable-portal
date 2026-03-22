@@ -61,7 +61,7 @@ export default function Home() {
           <div>
             <div className="text-center mb-10">
               <span className="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs px-4 py-1 rounded-full mb-4">
-              B.Tech AIE • Section F • 2026-27 Even Sem
+              B.Tech AIE • 2026-27 Even Sem
               </span>
               <h1 className="text-3xl font-bold text-white mb-1">Student Timetable Portal</h1>
               <p className="text-gray-500 text-sm">{today}</p>
