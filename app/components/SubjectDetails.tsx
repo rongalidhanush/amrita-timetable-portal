@@ -16,7 +16,7 @@ const subjectData: Record<string, { name: string; faculty: string; contact: stri
   "Section E": [
     { name: "Data Structures & Algorithms 1", faculty: "Thushara G A", contact: "9497691384", drive: "https://drive.google.com/drive/folders/18mUmnsZ8qIiJ1CgVZhfAh-neh5maXJxR" },
     { name: "User Interface Design", faculty: "Manju Khanna", contact: "9845176532", drive: "https://drive.google.com/drive/folders/1lSIXw-vG1T5PMzJJJgvBU00kDEF7MTT7" },
-    { name: "Glimpses of Glorious India", faculty: "TBA", contact: "TBA", drive: "https://drive.google.com/drive/folders/1WxrzTNPSb1J07hou6idozuBUXPchcl13" },
+    { name: "Glimpses of Glorious India", faculty: "Sourabh Sharma", contact: "9453701900", drive: "https://drive.google.com/drive/folders/1WxrzTNPSb1J07hou6idozuBUXPchcl13" },
     { name: "Mathematics for Computing 2", faculty: "Mamatha T M", contact: "9902931759", drive: "https://drive.google.com/drive/folders/1VLDe9muR7__pcnAboVTMD1XpFx5Uu7V8" },
     { name: "Intro to Electrical & Electronics Engg", faculty: "Sujit Kumar", contact: "9660048172", drive: "https://drive.google.com/drive/folders/1Ejk2kMDqSL3-GuIsfLongH1zVBbwh14z" },
     { name: "Object Oriented Programming in Java", faculty: "Dr. Reena Panwar", contact: "9650687776", drive: "https://drive.google.com/drive/folders/1WEytljATmq18SAFB1CMBiTQTRxU8rmAH" },

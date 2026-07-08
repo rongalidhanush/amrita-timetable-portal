@@ -1,56 +1,133 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const timetable: Record<string, { time: string; subject: string }[]> = {
-  Monday: [
-    { time: "08:10", subject: "OOP in Java" },
-    { time: "09:00", subject: "Maths for Computing 2" },
-    { time: "09:50", subject: "Glimpses of Glorious India" },
-    { time: "10:50", subject: "User Interface Design (Lab)" },
-    { time: "14:00", subject: "Free Period" },
-    { time: "14:50", subject: "Free Period" },
-  ],
-  Tuesday: [
-    { time: "08:10", subject: "Elements of Computing Systems 2" },
-    { time: "09:00", subject: "Data Structures & Algorithms 1" },
-    { time: "09:50", subject: "User Interface Design" },
-    { time: "11:00", subject: "Free Period" },
-    { time: "11:50", subject: "Intro to EEE" },
-    { time: "13:25", subject: "Maths for Computing 2 (Lab)" },
-  ],
-  Wednesday: [
-    { time: "08:10", subject: "Glimpses of Glorious India" },
-    { time: "09:00", subject: "Data Structures & Algorithms 1" },
-    { time: "09:50", subject: "Free Period" },
-    { time: "10:50", subject: "OOP in Java (Lab)" },
-    { time: "13:25", subject: "Elements of Computing Systems 2 (Lab)" },
-  ],
-  Thursday: [
-    { time: "08:10", subject: "Maths for Computing 2" },
-    { time: "09:00", subject: "Free Period" },
-    { time: "09:50", subject: "OOP in Java" },
-    { time: "11:00", subject: "Elements of Computing Systems 2" },
-    { time: "11:50", subject: "Intro to EEE" },
-    { time: "13:25", subject: "Data Structures & Algorithms 1 (Lab)" },
-  ],
-  Friday: [
-    { time: "08:10", subject: "Data Structures & Algorithms 1" },
-    { time: "09:00", subject: "User Interface Design" },
-    { time: "09:50", subject: "OOP in Java" },
-    { time: "10:50", subject: "Intro to EEE (Lab)" },
-    { time: "14:00", subject: "Maths for Computing 2" },
-    { time: "14:50", subject: "Free Period" },
-  ],
+const sections = ["Section D", "Section E", "Section F"];
+
+const timetableData: Record<string, Record<string, { time: string; subject: string }[]>> = {
+  "Section F": {
+    Monday: [
+      { time: "08:10", subject: "Fundamentals of AI" },
+      { time: "09:00", subject: "Operating Systems" },
+      { time: "09:50", subject: "Strategic Lessons from Mahabharata" },
+      { time: "10:50", subject: "Introduction to Computer Networks (Lab)" },
+      { time: "14:00", subject: "Mathematics for Computing 3" },
+      { time: "14:50", subject: "Introduction to Python" },
+    ],
+    Tuesday: [
+      { time: "08:10", subject: "Mathematics for Computing 3 (Lab)" },
+      { time: "10:50", subject: "Fundamentals of AI (Lab)" },
+      { time: "14:00", subject: "Introduction to Computer Networks" },
+      { time: "14:50", subject: "Intelligence of Biological Systems 1" },
+    ],
+    Wednesday: [
+      { time: "08:10", subject: "Intelligence of Biological Systems 1" },
+      { time: "09:00", subject: "Operating Systems" },
+      { time: "09:50", subject: "Mathematics for Computing 3" },
+      { time: "10:50", subject: "Data Structures & Algorithms 2 (Lab)" },
+      { time: "14:00", subject: "FE I" },
+      { time: "14:50", subject: "Counselling" },
+    ],
+    Thursday: [
+      { time: "08:10", subject: "Data Structures & Algorithms 2" },
+      { time: "09:00", subject: "Evaluation" },
+      { time: "09:50", subject: "FE I" },
+      { time: "11:00", subject: "Fundamentals of AI" },
+      { time: "11:50", subject: "Mathematics for Computing 3" },
+      { time: "13:25", subject: "Introduction to Python (Lab)" },
+    ],
+    Friday: [
+      { time: "08:10", subject: "Introduction to Computer Networks" },
+      { time: "09:00", subject: "Life Skills for Engineers 1" },
+      { time: "13:25", subject: "Operating Systems (Lab)" },
+      { time: "14:00", subject: "Data Structures & Algorithms 2" },
+    ],
+  },
+  "Section E": {
+    Monday: [
+      { time: "08:10", subject: "Mathematics for Computing 3 (Lab)" },
+      { time: "10:50", subject: "Fundamentals of AI (Lab)" },
+      { time: "14:00", subject: "Operating Systems" },
+      { time: "14:50", subject: "Introduction to Computer Networks" },
+    ],
+    Tuesday: [
+      { time: "08:10", subject: "Intelligence of Biological Systems 1" },
+      { time: "09:00", subject: "Life Skills for Engineers 1" },
+      { time: "11:50", subject: "Mathematics for Computing 3" },
+      { time: "13:25", subject: "Data Structures & Algorithms 2 (Lab)" },
+    ],
+    Wednesday: [
+      { time: "08:10", subject: "Introduction to Python (Lab)" },
+      { time: "11:00", subject: "Strategic Lessons from Mahabharata" },
+      { time: "11:50", subject: "Intelligence of Biological Systems 1" },
+      { time: "14:00", subject: "FE I" },
+      { time: "14:50", subject: "Mathematics for Computing 3" },
+    ],
+    Thursday: [
+      { time: "08:10", subject: "Fundamentals of AI" },
+      { time: "09:00", subject: "Counselling" },
+      { time: "09:50", subject: "FE I" },
+      { time: "11:00", subject: "Data Structures & Algorithms 2" },
+      { time: "11:50", subject: "Introduction to Computer Networks" },
+      { time: "13:25", subject: "Operating Systems (Lab)" },
+    ],
+    Friday: [
+      { time: "08:10", subject: "Operating Systems" },
+      { time: "09:00", subject: "Data Structures & Algorithms 2" },
+      { time: "09:50", subject: "Mathematics for Computing 3" },
+      { time: "11:00", subject: "Introduction to Python" },
+      { time: "11:50", subject: "Fundamentals of AI" },
+      { time: "13:25", subject: "Introduction to Computer Networks (Lab)" },
+    ],
+  },
+  "Section D": {
+    Monday: [
+      { time: "08:10", subject: "Intelligence of Biological Systems 1" },
+      { time: "09:00", subject: "Life Skills for Engineers 1" },
+      { time: "11:50", subject: "Mathematics for Computing 3" },
+      { time: "13:25", subject: "Fundamentals of AI (Lab)" },
+    ],
+    Tuesday: [
+      { time: "08:10", subject: "Fundamentals of AI" },
+      { time: "09:00", subject: "Intelligence of Biological Systems 1" },
+      { time: "09:50", subject: "Strategic Lessons from Mahabharata" },
+      { time: "11:00", subject: "Mathematics for Computing 3" },
+      { time: "11:50", subject: "Introduction to Computer Networks" },
+      { time: "13:25", subject: "Operating Systems (Lab)" },
+    ],
+    Wednesday: [
+      { time: "08:10", subject: "Mathematics for Computing 3 (Lab)" },
+      { time: "10:50", subject: "Data Structures & Algorithms 2 (Lab)" },
+      { time: "14:00", subject: "FE I" },
+      { time: "14:50", subject: "Counselling" },
+    ],
+    Thursday: [
+      { time: "08:10", subject: "Operating Systems" },
+      { time: "09:00", subject: "Data Structures & Algorithms 2" },
+      { time: "09:50", subject: "FE I" },
+      { time: "11:00", subject: "Introduction to Python" },
+      { time: "11:50", subject: "Mathematics for Computing 3" },
+      { time: "13:25", subject: "Introduction to Computer Networks (Lab)" },
+    ],
+    Friday: [
+      { time: "08:10", subject: "Data Structures & Algorithms 2" },
+      { time: "09:00", subject: "Introduction to Computer Networks" },
+      { time: "09:50", subject: "Fundamentals of AI" },
+      { time: "11:00", subject: "Operating Systems" },
+      { time: "11:50", subject: "Evaluation" },
+      { time: "13:25", subject: "Introduction to Python (Lab)" },
+    ],
+  },
 };
 
 export default function Reminders() {
+  const [selectedSection, setSelectedSection] = useState("Section F");
   const [enabled, setEnabled] = useState(false);
   const [status, setStatus] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
 
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const today = days[new Date().getDay()];
-  const todaySchedule = timetable[today] || [];
+  const todaySchedule = timetableData[selectedSection][today] || [];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -64,7 +141,6 @@ export default function Reminders() {
     const classEnd = new Date();
     classEnd.setHours(h, m + 50, 0, 0);
     const now = currentTime;
-
     if (now >= classStart && now <= classEnd) return "ongoing";
     if (now < classStart) return "upcoming";
     return "done";
@@ -111,14 +187,31 @@ export default function Reminders() {
 
   return (
     <div className="mt-6 mb-10">
-      <h2 className="text-2xl font-bold text-blue-400 mb-1">Class Reminders</h2>
+      <h2 className="text-xl font-bold text-white mb-1">Class Reminders</h2>
       <p className="text-gray-400 text-sm mb-4">
         Today is <span className="text-white font-semibold">{today}</span> •{" "}
         {currentTime.toLocaleTimeString("en-IN")}
       </p>
 
+      {/* Section Selector */}
+      <div className="flex gap-2 mb-5">
+        {sections.map((sec) => (
+          <button
+            key={sec}
+            onClick={() => { setSelectedSection(sec); setEnabled(false); setStatus(""); }}
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition ${
+              selectedSection === sec
+                ? "bg-blue-600 text-white"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+            }`}
+          >
+            {sec}
+          </button>
+        ))}
+      </div>
+
       {todaySchedule.length === 0 ? (
-        <div className="bg-gray-800 rounded-xl p-8 text-center">
+        <div className="bg-[#161b22] border border-gray-800 rounded-xl p-8 text-center">
           <p className="text-4xl mb-3">🎉</p>
           <p className="text-white font-bold text-lg">No classes today!</p>
           <p className="text-gray-400 text-sm mt-1">Enjoy your {today}!</p>
@@ -133,16 +226,14 @@ export default function Reminders() {
                 key={time}
                 className={`flex items-center justify-between p-4 rounded-xl border ${
                   status === "ongoing"
-                    ? "bg-green-900 border-green-500"
+                    ? "bg-green-900/30 border-green-500"
                     : status === "upcoming"
-                    ? "bg-gray-800 border-gray-600"
-                    : "bg-gray-900 border-gray-700 opacity-50"
+                    ? "bg-[#161b22] border-gray-700"
+                    : "bg-gray-900/30 border-gray-800 opacity-50"
                 }`}
               >
                 <div>
-                  <p className={`font-semibold ${subject === "Free Period" ? "text-gray-400" : "text-white"}`}>
-                    {subject}
-                  </p>
+                  <p className="font-semibold text-sm text-white">{subject}</p>
                   <p className="text-gray-400 text-xs mt-1">{time}</p>
                 </div>
                 <div className="text-right">

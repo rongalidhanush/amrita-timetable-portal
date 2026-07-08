@@ -2,13 +2,16 @@
 import { useState } from "react";
 
 const subjects = [
-  { name: "Maths for Computing 2", total: 72 },
-  { name: "User Interface Design", total: 60 },
-  { name: "Intro to EEE", total: 66 },
-  { name: "Elements of Computing Systems 2", total: 65 },
-  { name: "Data Structures & Algorithms 1", total: 75 },
-  { name: "OOP in Java", total: 77 },
-  { name: "Glimpses of Glorious India", total: 31 },
+  { name: "Mathematics for Computing 3", total: 60 },
+  { name: "Fundamentals of AI", total: 55 },
+  { name: "Operating Systems", total: 55 },
+  { name: "Data Structures & Algorithms 2", total: 55 },
+  { name: "Introduction to Computer Networks", total: 55 },
+  { name: "Introduction to Python", total: 40 },
+  { name: "Intelligence of Biological Systems 1", total: 30 },
+  { name: "Life Skills for Engineers 1", total: 25 },
+  { name: "Strategic Lessons from Mahabharata", total: 15 },
+  { name: "FE I", total: 30 },
 ];
 
 export default function AttendanceTracker() {
@@ -47,7 +50,7 @@ export default function AttendanceTracker() {
     <div className="mt-6 mb-10">
       <h2 className="text-xl font-bold text-white mb-1">Attendance Calculator</h2>
       <p className="text-gray-400 text-sm mb-6">
-        Minimum required: <span className="text-yellow-400 font-semibold">75%</span> • Semester ends: May 8, 2026
+        Minimum required: <span className="text-yellow-400 font-semibold">75%</span> • Semester ends: Dec 1, 2026
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -79,7 +82,6 @@ export default function AttendanceTracker() {
           return (
             <div key={sub.name} className={`bg-[#161b22] border ${border} rounded-2xl p-5 transition-all`}>
 
-              {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="font-semibold text-white text-sm">{sub.name}</h3>
@@ -90,7 +92,6 @@ export default function AttendanceTracker() {
                 </span>
               </div>
 
-              {/* Progress bar */}
               <div className="w-full bg-gray-800 rounded-full h-1.5 mb-4">
                 <div
                   className={`h-1.5 rounded-full transition-all duration-500 ${barColor}`}
@@ -98,7 +99,6 @@ export default function AttendanceTracker() {
                 />
               </div>
 
-              {/* Inputs */}
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <div>
                   <p className="text-gray-500 text-xs mb-1.5">Classes Conducted</p>
@@ -108,7 +108,7 @@ export default function AttendanceTracker() {
                     max={sub.total}
                     value={data[sub.name].conducted}
                     onChange={(e) => update(sub.name, "conducted", e.target.value)}
-                    placeholder="e.g. 40"
+                    placeholder="e.g. 20"
                     className="w-full bg-gray-900 border border-gray-700 hover:border-gray-500 focus:border-blue-500 text-white text-sm rounded-xl px-3 py-2 focus:outline-none transition"
                   />
                 </div>
@@ -120,13 +120,12 @@ export default function AttendanceTracker() {
                     max={data[sub.name].conducted || sub.total}
                     value={data[sub.name].attended}
                     onChange={(e) => update(sub.name, "attended", e.target.value)}
-                    placeholder="e.g. 35"
+                    placeholder="e.g. 18"
                     className="w-full bg-gray-900 border border-gray-700 hover:border-gray-500 focus:border-blue-500 text-white text-sm rounded-xl px-3 py-2 focus:outline-none transition"
                   />
                 </div>
               </div>
 
-              {/* Results */}
               {result ? (
                 <>
                   <div className="grid grid-cols-3 gap-2 text-center mb-3">
@@ -161,7 +160,9 @@ export default function AttendanceTracker() {
                   )}
                 </>
               ) : (
-                <p className="text-gray-600 text-xs text-center">📊 Know your bunk margin,buddy!</p>
+                <div className="bg-gray-900 border border-gray-700 rounded-xl px-3 py-3 text-center">
+                  <p className="text-yellow-400 text-xs font-medium">📊 Know your bunk margin, buddy! 🎯</p>
+                </div>
               )}
             </div>
           );

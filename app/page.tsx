@@ -14,8 +14,8 @@ export default function Home() {
     weekday: "long", year: "numeric", month: "long", day: "numeric"
   });
 
-  const semStart = new Date("2026-01-05");
-  const semEnd = new Date("2026-05-08");
+  const semStart = new Date("2026-07-08");
+  const semEnd = new Date("2026-12-01");
   const now = new Date();
   const totalDays = Math.ceil((semEnd.getTime() - semStart.getTime()) / 86400000);
   const passedDays = Math.ceil((now.getTime() - semStart.getTime()) / 86400000);
@@ -61,7 +61,7 @@ export default function Home() {
           <div>
             <div className="text-center mb-10">
               <span className="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs px-4 py-1 rounded-full mb-4">
-              B.Tech AIE • 2026-27 Even Sem
+                B.Tech AIE • Section F • 2026-27 Odd Sem
               </span>
               <h1 className="text-3xl font-bold text-white mb-1">Student Timetable Portal</h1>
               <p className="text-gray-500 text-sm">{today}</p>
@@ -70,7 +70,7 @@ export default function Home() {
             <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-5 mb-6">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-sm font-semibold text-gray-300">Semester Progress</p>
-                <span className="text-xs text-gray-500">{daysLeft} days left • May 8, 2026</span>
+                <span className="text-xs text-gray-500">{daysLeft} days left • Dec 1, 2026</span>
               </div>
               <div className="w-full bg-gray-800 rounded-full h-2.5">
                 <div
