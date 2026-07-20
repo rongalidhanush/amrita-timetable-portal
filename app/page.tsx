@@ -15,7 +15,7 @@ export default function Home() {
   });
 
   const semStart = new Date("2026-07-08");
-  const semEnd = new Date("2026-12-01");
+  const semEnd = new Date("2026-11-13");
   const now = new Date();
   const totalDays = Math.ceil((semEnd.getTime() - semStart.getTime()) / 86400000);
   const passedDays = Math.ceil((now.getTime() - semStart.getTime()) / 86400000);
@@ -70,7 +70,7 @@ export default function Home() {
             <div className="bg-[#161b22] border border-gray-800 rounded-2xl p-5 mb-6">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-sm font-semibold text-gray-300">Semester Progress</p>
-                <span className="text-xs text-gray-500">{daysLeft} days left • Dec 1, 2026</span>
+                <span className="text-xs text-gray-500">{daysLeft} days left • Nov 13, 2026</span>
               </div>
               <div className="w-full bg-gray-800 rounded-full h-2.5">
                 <div
