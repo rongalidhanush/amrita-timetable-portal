@@ -19,7 +19,7 @@ export default function About() {
         <p className="text-gray-400 text-sm">B.Tech Artificial Intelligence & Engineering</p>
         <div className="flex justify-center gap-2 mt-3">
           <span className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs px-3 py-1 rounded-full">Section F</span>
-          <span className="bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs px-3 py-1 rounded-full">2026-27 Even Sem</span>
+          <span className="bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs px-3 py-1 rounded-full">2026-27 Odd Sem</span>
         </div>
       </div>
 

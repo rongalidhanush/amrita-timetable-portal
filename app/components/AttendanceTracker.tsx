@@ -50,7 +50,7 @@ export default function AttendanceTracker() {
     <div className="mt-6 mb-10">
       <h2 className="text-xl font-bold text-white mb-1">Attendance Calculator</h2>
       <p className="text-gray-400 text-sm mb-6">
-        Minimum required: <span className="text-yellow-400 font-semibold">75%</span> • Semester ends: Dec 1, 2026
+        Minimum required: <span className="text-yellow-400 font-semibold">75%</span> • Semester ends: Nov 13, 2026
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
